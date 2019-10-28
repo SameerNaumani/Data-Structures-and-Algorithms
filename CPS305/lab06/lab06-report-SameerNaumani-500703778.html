@@ -2,7 +2,7 @@
 <html>
 <head><meta charset="utf-8" />
 
-<title>lab05-report-SameerNaumani-500703778</title>
+<title>lab06-report-SameerNaumani-500703778</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13116,9 +13116,9 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="CPS305-Fall-2019">CPS305 Fall 2019<a class="anchor-link" href="#CPS305-Fall-2019">&#182;</a></h1><h2 id="Lab-05-Report">Lab 05 Report<a class="anchor-link" href="#Lab-05-Report">&#182;</a></h2><h2 id="Sameer-Naumani,-Std-ID-500703778">Sameer Naumani, Std ID 500703778<a class="anchor-link" href="#Sameer-Naumani,-Std-ID-500703778">&#182;</a></h2><p>10/10/2019</p>
-<h1 id="Introduction-and-Overall-Comments">Introduction and Overall Comments<a class="anchor-link" href="#Introduction-and-Overall-Comments">&#182;</a></h1><p>The goal of this lab is to explore the concept of Hashing. In the excercise we utilize the pre-defined HashTable class and Re-implement the put method so that the table will automatically resize itself when the loading factor reaches apredetermined value (you can decide the value based on your assessment of load versus performance). Set your initial tablesize to 11.</p>
-<p>Overall, integrating the helper functions into the original put function was a little tricky but overall this lab enhanced the understanding of hash functions.</p>
+<h1 id="CPS305-Fall-2019">CPS305 Fall 2019<a class="anchor-link" href="#CPS305-Fall-2019">&#182;</a></h1><h2 id="Lab-06-Report">Lab 06 Report<a class="anchor-link" href="#Lab-06-Report">&#182;</a></h2><h2 id="Sameer-Naumani,-Std-ID-500703778">Sameer Naumani, Std ID 500703778<a class="anchor-link" href="#Sameer-Naumani,-Std-ID-500703778">&#182;</a></h2><p>10/27/2019</p>
+<h1 id="Introduction-and-Overall-Comments">Introduction and Overall Comments<a class="anchor-link" href="#Introduction-and-Overall-Comments">&#182;</a></h1><p>The goal of this lab is to explore the quickSort Algorithm. In the excercise we utilize the pre-defined quickSort algorithm and Re-implement the median-of-three method (see Section 5.12 of the textbook) for selecting a pivot value as amodification to quickSort. After which testing was done on the new implementation in the test.py file. Additionally an experiment was devised to check the run time of both functioins</p>
+<p>Overall, the lab gave a better understanding of the quickSort algorithm and how to best decide a pivot value.</p>
 
 </div>
 </div>
@@ -13132,123 +13132,67 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[43]:</div>
+<div class="prompt input_prompt">In&nbsp;[60]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">copy</span> 
-<span class="kn">import</span> <span class="nn">sympy</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Implement the median-of-three method (see Section 5.12 of the textbook) </span>
+<span class="c1"># for selecting a pivot value as amodification to quickSort (ame this function mo3_quickSort). </span>
+<span class="c1"># Prepare test cases for your mo3_quickSort</span>
 
-<span class="k">class</span> <span class="nc">HashTable</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="mi">11</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">size</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">slots</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">maxLoadFactor</span> <span class="o">=</span> <span class="mf">0.80</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">def</span> <span class="nf">mo3_quickSort</span><span class="p">(</span><span class="n">alist</span><span class="p">):</span>
+    <span class="n">quickSortHelper</span><span class="p">(</span><span class="n">alist</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">alist</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">quickSortHelper</span><span class="p">(</span><span class="n">alist</span><span class="p">,</span><span class="n">first</span><span class="p">,</span><span class="n">last</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">first</span><span class="o">&lt;</span><span class="n">last</span><span class="p">:</span>
+        <span class="n">splitpoint</span> <span class="o">=</span> <span class="n">partition</span><span class="p">(</span><span class="n">alist</span><span class="p">,</span><span class="n">first</span><span class="p">,</span><span class="n">last</span><span class="p">)</span>
+        <span class="n">quickSortHelper</span><span class="p">(</span><span class="n">alist</span><span class="p">,</span><span class="n">first</span><span class="p">,</span><span class="n">splitpoint</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">quickSortHelper</span><span class="p">(</span><span class="n">alist</span><span class="p">,</span><span class="n">splitpoint</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">last</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">partition</span><span class="p">(</span><span class="n">alist</span><span class="p">,</span><span class="n">first</span><span class="p">,</span><span class="n">last</span><span class="p">):</span>
+    <span class="c1">#find middle index</span>
+    <span class="n">middleindex</span> <span class="o">=</span> <span class="n">median</span><span class="p">(</span><span class="n">alist</span><span class="p">,</span><span class="n">first</span><span class="p">,</span><span class="n">last</span><span class="p">,(</span><span class="n">first</span><span class="o">+</span><span class="n">last</span><span class="p">)</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span>
+    <span class="c1">#print(middleindex)</span>
+    <span class="c1">#swap first element with the pivot value chosen</span>
+    <span class="n">alist</span><span class="p">[</span><span class="n">first</span><span class="p">],</span><span class="n">alist</span><span class="p">[</span><span class="n">middleindex</span><span class="p">]</span> <span class="o">=</span> <span class="n">alist</span><span class="p">[</span><span class="n">middleindex</span><span class="p">],</span><span class="n">alist</span><span class="p">[</span><span class="n">first</span><span class="p">]</span>
     
-    <span class="k">def</span> <span class="nf">put</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">key</span><span class="p">,</span><span class="n">data</span><span class="p">):</span>
-        <span class="n">hashvalue</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hashfunction</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">slots</span><span class="p">))</span>            
-            
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">slots</span><span class="p">[</span><span class="n">hashvalue</span><span class="p">]</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">slots</span><span class="p">[</span><span class="n">hashvalue</span><span class="p">]</span> <span class="o">=</span> <span class="n">key</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">hashvalue</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">checkGrow</span><span class="p">()</span>
-            
+    <span class="n">pivotvalue</span> <span class="o">=</span> <span class="n">alist</span><span class="p">[</span><span class="n">first</span><span class="p">]</span>
+
+    <span class="n">leftmark</span> <span class="o">=</span> <span class="n">first</span><span class="o">+</span><span class="mi">1</span>
+    <span class="n">rightmark</span> <span class="o">=</span> <span class="n">last</span>
+
+    <span class="n">done</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">done</span><span class="p">:</span>
+        <span class="k">while</span> <span class="n">leftmark</span> <span class="o">&lt;=</span> <span class="n">rightmark</span> <span class="ow">and</span> <span class="n">alist</span><span class="p">[</span><span class="n">leftmark</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">pivotvalue</span><span class="p">:</span>
+            <span class="n">leftmark</span> <span class="o">=</span> <span class="n">leftmark</span> <span class="o">+</span> <span class="mi">1</span>
+
+        <span class="k">while</span> <span class="n">alist</span><span class="p">[</span><span class="n">rightmark</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">pivotvalue</span> <span class="ow">and</span> <span class="n">rightmark</span> <span class="o">&gt;=</span> <span class="n">leftmark</span><span class="p">:</span>
+            <span class="n">rightmark</span> <span class="o">=</span> <span class="n">rightmark</span> <span class="o">-</span><span class="mi">1</span>
+
+        <span class="k">if</span> <span class="n">rightmark</span> <span class="o">&lt;</span> <span class="n">leftmark</span><span class="p">:</span>
+            <span class="n">done</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">slots</span><span class="p">[</span><span class="n">hashvalue</span><span class="p">]</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">hashvalue</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>  <span class="c1">#replace</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">nextslot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rehash</span><span class="p">(</span><span class="n">hashvalue</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">slots</span><span class="p">))</span>
-                <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">slots</span><span class="p">[</span><span class="n">nextslot</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span> \
-                          <span class="bp">self</span><span class="o">.</span><span class="n">slots</span><span class="p">[</span><span class="n">nextslot</span><span class="p">]</span> <span class="o">!=</span> <span class="n">key</span><span class="p">:</span>
-                    <span class="n">nextslot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rehash</span><span class="p">(</span><span class="n">nextslot</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">slots</span><span class="p">))</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="n">alist</span><span class="p">[</span><span class="n">leftmark</span><span class="p">]</span>
+            <span class="n">alist</span><span class="p">[</span><span class="n">leftmark</span><span class="p">]</span> <span class="o">=</span> <span class="n">alist</span><span class="p">[</span><span class="n">rightmark</span><span class="p">]</span>
+            <span class="n">alist</span><span class="p">[</span><span class="n">rightmark</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span>
 
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">slots</span><span class="p">[</span><span class="n">nextslot</span><span class="p">]</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">slots</span><span class="p">[</span><span class="n">nextslot</span><span class="p">]</span><span class="o">=</span><span class="n">key</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">nextslot</span><span class="p">]</span><span class="o">=</span><span class="n">data</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">checkGrow</span><span class="p">()</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">nextslot</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span> <span class="c1">#replace</span>
-       
+    <span class="n">temp</span> <span class="o">=</span> <span class="n">alist</span><span class="p">[</span><span class="n">first</span><span class="p">]</span>
+    <span class="n">alist</span><span class="p">[</span><span class="n">first</span><span class="p">]</span> <span class="o">=</span> <span class="n">alist</span><span class="p">[</span><span class="n">rightmark</span><span class="p">]</span>
+    <span class="n">alist</span><span class="p">[</span><span class="n">rightmark</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span>
 
-    <span class="k">def</span> <span class="nf">hashfunction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">key</span><span class="p">,</span><span class="n">size</span><span class="p">):</span>
-         <span class="k">return</span> <span class="n">key</span><span class="o">%</span><span class="k">size</span>
+    <span class="k">return</span> <span class="n">rightmark</span>
 
-    <span class="k">def</span> <span class="nf">rehash</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">oldhash</span><span class="p">,</span><span class="n">size</span><span class="p">):</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">oldhash</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="k">size</span>
+<span class="c1"># Implement median</span>
+<span class="k">def</span> <span class="nf">median</span><span class="p">(</span><span class="n">alist</span><span class="p">,</span> <span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">,</span> <span class="n">middle</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">alist</span><span class="p">[</span><span class="n">first</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">alist</span><span class="p">[</span><span class="n">last</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">last</span> <span class="k">if</span> <span class="n">alist</span><span class="p">[</span><span class="n">last</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">alist</span><span class="p">[</span><span class="n">middle</span><span class="p">]</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">middle</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">first</span> <span class="k">if</span> <span class="n">alist</span><span class="p">[</span><span class="n">first</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">alist</span><span class="p">[</span><span class="n">middle</span><span class="p">]</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">middle</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">key</span><span class="p">):</span>
-        <span class="n">startslot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hashfunction</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">slots</span><span class="p">))</span>
 
-        <span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="n">stop</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="n">found</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="n">position</span> <span class="o">=</span> <span class="n">startslot</span>
-        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">slots</span><span class="p">[</span><span class="n">position</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">and</span>  \
-                           <span class="ow">not</span> <span class="n">found</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">stop</span><span class="p">:</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">slots</span><span class="p">[</span><span class="n">position</span><span class="p">]</span> <span class="o">==</span> <span class="n">key</span><span class="p">:</span>
-                <span class="n">found</span> <span class="o">=</span> <span class="kc">True</span>
-                <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">position</span><span class="p">]</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">position</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rehash</span><span class="p">(</span><span class="n">position</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">slots</span><span class="p">))</span>
-                <span class="k">if</span> <span class="n">position</span> <span class="o">==</span> <span class="n">startslot</span><span class="p">:</span>
-                    <span class="n">stop</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="k">return</span> <span class="n">data</span>
-
-    <span class="k">def</span> <span class="nf">checkGrow</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxLoadFactor</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">grow</span><span class="p">()</span>
-    
-    <span class="k">def</span> <span class="nf">grow</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">newSize</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">size</span> 
-        <span class="k">if</span> <span class="p">(</span><span class="n">newSize</span><span class="o">%</span><span class="k">2</span> == 0):
-            <span class="n">newSize</span> <span class="o">=</span> <span class="n">newSize</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="k">while</span><span class="p">(</span><span class="n">sympy</span><span class="o">.</span><span class="n">isprime</span><span class="p">(</span><span class="n">newSize</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;false&#39;</span><span class="p">):</span>
-            <span class="n">newSize</span> <span class="o">+=</span> <span class="mi">2</span>
-        <span class="n">H2</span> <span class="o">=</span> <span class="n">HashTable</span><span class="p">(</span><span class="n">newSize</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">slots</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">key</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">H2</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
-      
-        <span class="bp">self</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">newSize</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">slots</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">H2</span><span class="o">.</span><span class="n">slots</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">H2</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
-        <span class="k">del</span> <span class="n">H2</span>
-    
-    
-
-    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">key</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">key</span><span class="p">,</span><span class="n">data</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="n">data</span><span class="p">)</span>
-
-<span class="n">H</span><span class="o">=</span><span class="n">HashTable</span><span class="p">()</span>
-<span class="n">H</span><span class="p">[</span><span class="mi">54</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;cat&quot;</span>
-<span class="n">H</span><span class="p">[</span><span class="mi">26</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;dog&quot;</span>
-<span class="n">H</span><span class="p">[</span><span class="mi">93</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;lion&quot;</span>
-<span class="n">H</span><span class="p">[</span><span class="mi">17</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;tiger&quot;</span>
-<span class="n">H</span><span class="p">[</span><span class="mi">77</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;bird&quot;</span>
-<span class="n">H</span><span class="p">[</span><span class="mi">31</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;cow&quot;</span>
-<span class="n">H</span><span class="p">[</span><span class="mi">44</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;goat&quot;</span>
-<span class="n">H</span><span class="p">[</span><span class="mi">55</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;salamander&quot;</span>
-<span class="n">H</span><span class="p">[</span><span class="mi">20</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;chicken&quot;</span>
-<span class="n">H</span><span class="p">[</span><span class="mi">21</span><span class="p">]</span><span class="o">=</span> <span class="s2">&quot;whale&quot;</span>    <span class="c1">#10</span>
-<span class="n">H</span><span class="p">[</span><span class="mi">34</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;chihuahua&quot;</span> <span class="c1">#11</span>
-<span class="n">H</span><span class="p">[</span><span class="mi">45</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;mammoth&quot;</span> <span class="c1">#12 should not work</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">H</span><span class="o">.</span><span class="n">slots</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">H</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">H</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">H</span><span class="p">[</span><span class="mi">20</span><span class="p">])</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">H</span><span class="p">[</span><span class="mi">17</span><span class="p">])</span>
-<span class="n">H</span><span class="p">[</span><span class="mi">20</span><span class="p">]</span><span class="o">=</span><span class="s1">&#39;duck&#39;</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">H</span><span class="p">[</span><span class="mi">20</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">H</span><span class="p">[</span><span class="mi">99</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">H</span><span class="o">.</span><span class="n">slots</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">alist</span> <span class="o">=</span> <span class="p">[</span><span class="mi">54</span><span class="p">,</span><span class="mi">26</span><span class="p">,</span><span class="mi">93</span><span class="p">,</span><span class="mi">17</span><span class="p">,</span><span class="mi">77</span><span class="p">,</span><span class="mi">31</span><span class="p">,</span><span class="mi">44</span><span class="p">,</span><span class="mi">55</span><span class="p">,</span><span class="mi">20</span><span class="p">]</span>
+<span class="n">mo3_quickSort</span><span class="p">(</span><span class="n">alist</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">alist</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13265,16 +13209,147 @@ div#notebook {
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[45, 93, None, 26, None, None, None, None, 77, 55, 31, 54, 34, None, None, None, None, 17, None, None, 20, 44, 21]
-[&#39;mammoth&#39;, &#39;lion&#39;, None, &#39;dog&#39;, None, None, None, None, &#39;bird&#39;, &#39;salamander&#39;, &#39;cow&#39;, &#39;cat&#39;, &#39;chihuahua&#39;, None, None, None, None, &#39;tiger&#39;, None, None, &#39;chicken&#39;, &#39;goat&#39;, &#39;whale&#39;]
-23
-chicken
-tiger
-duck
-None
-93
+<pre>[17, 20, 26, 31, 44, 54, 55, 77, 93]
 </pre>
 </div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[41]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span>    
+<span class="c1">#Original Quick Sort</span>
+<span class="k">def</span> <span class="nf">quickSort</span><span class="p">(</span><span class="n">alist</span><span class="p">):</span>
+    <span class="n">quickSortHelper2</span><span class="p">(</span><span class="n">alist</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">alist</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">quickSortHelper2</span><span class="p">(</span><span class="n">alist</span><span class="p">,</span><span class="n">first</span><span class="p">,</span><span class="n">last</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">first</span><span class="o">&lt;</span><span class="n">last</span><span class="p">:</span>
+        <span class="n">splitpoint</span> <span class="o">=</span> <span class="n">partition2</span><span class="p">(</span><span class="n">alist</span><span class="p">,</span><span class="n">first</span><span class="p">,</span><span class="n">last</span><span class="p">)</span>
+        <span class="n">quickSortHelper2</span><span class="p">(</span><span class="n">alist</span><span class="p">,</span><span class="n">first</span><span class="p">,</span><span class="n">splitpoint</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">quickSortHelper2</span><span class="p">(</span><span class="n">alist</span><span class="p">,</span><span class="n">splitpoint</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">last</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">partition2</span><span class="p">(</span><span class="n">alist</span><span class="p">,</span><span class="n">first</span><span class="p">,</span><span class="n">last</span><span class="p">):</span>
+    <span class="n">pivotvalue</span> <span class="o">=</span> <span class="n">alist</span><span class="p">[</span><span class="n">first</span><span class="p">]</span>
+
+    <span class="n">leftmark</span> <span class="o">=</span> <span class="n">first</span><span class="o">+</span><span class="mi">1</span>
+    <span class="n">rightmark</span> <span class="o">=</span> <span class="n">last</span>
+
+    <span class="n">done</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">done</span><span class="p">:</span>
+
+        <span class="k">while</span> <span class="n">leftmark</span> <span class="o">&lt;=</span> <span class="n">rightmark</span> <span class="ow">and</span> <span class="n">alist</span><span class="p">[</span><span class="n">leftmark</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">pivotvalue</span><span class="p">:</span>
+            <span class="n">leftmark</span> <span class="o">=</span> <span class="n">leftmark</span> <span class="o">+</span> <span class="mi">1</span>
+
+        <span class="k">while</span> <span class="n">alist</span><span class="p">[</span><span class="n">rightmark</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">pivotvalue</span> <span class="ow">and</span> <span class="n">rightmark</span> <span class="o">&gt;=</span> <span class="n">leftmark</span><span class="p">:</span>
+            <span class="n">rightmark</span> <span class="o">=</span> <span class="n">rightmark</span> <span class="o">-</span><span class="mi">1</span>
+
+        <span class="k">if</span> <span class="n">rightmark</span> <span class="o">&lt;</span> <span class="n">leftmark</span><span class="p">:</span>
+            <span class="n">done</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="n">alist</span><span class="p">[</span><span class="n">leftmark</span><span class="p">]</span>
+            <span class="n">alist</span><span class="p">[</span><span class="n">leftmark</span><span class="p">]</span> <span class="o">=</span> <span class="n">alist</span><span class="p">[</span><span class="n">rightmark</span><span class="p">]</span>
+            <span class="n">alist</span><span class="p">[</span><span class="n">rightmark</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span>
+
+    <span class="n">temp</span> <span class="o">=</span> <span class="n">alist</span><span class="p">[</span><span class="n">first</span><span class="p">]</span>
+    <span class="n">alist</span><span class="p">[</span><span class="n">first</span><span class="p">]</span> <span class="o">=</span> <span class="n">alist</span><span class="p">[</span><span class="n">rightmark</span><span class="p">]</span>
+    <span class="n">alist</span><span class="p">[</span><span class="n">rightmark</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span>
+
+
+    <span class="k">return</span> <span class="n">rightmark</span>
+
+
+<span class="n">alist</span> <span class="o">=</span> <span class="p">[</span><span class="mi">54</span><span class="p">,</span><span class="mi">26</span><span class="p">,</span><span class="mi">93</span><span class="p">,</span><span class="mi">17</span><span class="p">,</span><span class="mi">77</span><span class="p">,</span><span class="mi">31</span><span class="p">,</span><span class="mi">44</span><span class="p">,</span><span class="mi">55</span><span class="p">,</span><span class="mi">20</span><span class="p">]</span>
+<span class="n">quickSort</span><span class="p">(</span><span class="n">alist</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">alist</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">alist</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[17, 20, 26, 31, 44, 54, 55, 77, 93]
+9
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[63]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">timeit</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+
+<span class="n">y1</span><span class="p">,</span> <span class="n">y1acc</span> <span class="o">=</span> <span class="p">[],</span> <span class="mi">0</span>
+<span class="n">y2</span><span class="p">,</span> <span class="n">y2acc</span> <span class="o">=</span> <span class="p">[],</span> <span class="mi">0</span>
+
+<span class="n">reps</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">reps</span><span class="p">):</span>
+        <span class="n">t1</span> <span class="o">=</span> <span class="n">timeit</span><span class="o">.</span><span class="n">Timer</span><span class="p">(</span><span class="s2">&quot;mo3_quickSort(random.sample(range(100), 50))&quot;</span><span class="p">,</span> <span class="s2">&quot;from __main__ import mo3_quickSort, random&quot;</span><span class="p">)</span>
+        <span class="n">t2</span> <span class="o">=</span> <span class="n">timeit</span><span class="o">.</span><span class="n">Timer</span><span class="p">(</span><span class="s2">&quot;quickSort(random.sample(range(100), 50))&quot;</span><span class="p">,</span> <span class="s2">&quot;from __main__ import quickSort, random&quot;</span><span class="p">)</span>
+        
+        <span class="n">y1acc</span> <span class="o">+=</span> <span class="n">t1</span><span class="o">.</span><span class="n">timeit</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="n">reps</span><span class="p">)</span>
+        <span class="n">y2acc</span> <span class="o">+=</span> <span class="n">t2</span><span class="o">.</span><span class="n">timeit</span><span class="p">(</span><span class="n">number</span><span class="o">=</span><span class="n">reps</span><span class="p">)</span>
+
+    <span class="n">y1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y1acc</span><span class="o">/</span><span class="n">reps</span><span class="p">)</span>
+    <span class="n">y2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y2acc</span><span class="o">/</span><span class="n">reps</span><span class="p">)</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>        
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;List size&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Time (in miliseconds)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="s1">&#39;r+&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;mo3_quickSort&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="s1">&#39;g+&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;quickSort&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAY4AAAEGCAYAAABy53LJAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAADh0RVh0U29mdHdhcmUAbWF0cGxvdGxpYiB2ZXJzaW9uMy4xLjAsIGh0dHA6Ly9tYXRwbG90bGliLm9yZy+17YcXAAAgAElEQVR4nO3deZRU5Z3/8feHBiGsOkj8IShNRuPWLGK7RA2giHFBETUuQaOODr8YGZPJz0RzMqarTYzLyXGZSSTHiUbNIiaoiCYzzqjgHkMjigswg0LGFkbBBcEd+P7+qFtQtL3Uha6u6q7P65x76t7nLvWtrb/9PPfe51FEYGZmVqhupQ7AzMw6FycOMzNLxYnDzMxSceIwM7NUnDjMzCyV7qUOoCPsvPPOUV1dXeowzMw6lQULFqyJiEFNyysicVRXV9PQ0FDqMMzMOhVJf22u3E1VZmaWihOHmZml4sRhZmapVMQ5juZ8+umnNDY28tFHH5U6FCtQr169GDp0KD169Ch1KGYVrWITR2NjI/369aO6uhpJpQ7H2hARvPXWWzQ2NjJ8+PBSh2NW0Sq2qeqjjz5i4MCBThqdhCQGDhzoGqJZGplMUQ5bsYkDcNLoZPx5maVUX1+Uw1Z04jAzs/ScOMzMupJMBqTsBFvm27HZyokjrSK1GaZ13333MXLkSEaPHk1tbS1PPPFEux5/zpw5XH311S2uX7FiBTU1NZ8p/+CDD5g6dSojRoygpqaGww8/nPXr16d67p/85Cep4zWzRCYDEdkJtsy3498uVcIIgLW1tdG0y5HFixezzz77pD+YtOUDKaH169fTp08fJLFo0SJOO+00lixZ0mHPv2LFCiZNmsSLL764VflVV13F6tWrue666wBYunQp1dXV9OzZs81jRgQRQf/+/VtMNtv8uZlVou38eyVpQUTUNi13jaOEVqxYwd57780FF1xATU0NU6dO5aGHHuKwww5jzz335C9/+Qtvv/02J510EiNHjuSQQw5h0aJFAPTt23fzyeL333+/1RPHEcH06dPZd999Of744znuuOOYNWsWkO3Ha82aNQA0NDQwfvx4AG677TamT58OwBtvvMGUKVMYNWoUo0aN4qmnntrq+K+++ir7778/8+fPZ9WqVQwZMmTzur322mtz0rjuuuuoqamhpqaGG264YfN7sM8++/DNb36TMWPGcP755/Phhx8yevRopk6dur1vsVllq6srznFz/+V15emAAw6Ipl5++eXPlLWori5X2dt6qqsr/BjNWL58eVRVVcWiRYti48aNMWbMmDjvvPNi06ZNMXv27Jg8eXJMnz49MplMREQ8/PDDMWrUqM3733PPPbHXXnvFTjvtFE899VSLz3P33XfHUUcdFRs2bIjXX389BgwYEH/4wx8iImLYsGGxevXqiIiYP39+jBs3LiIifvWrX8VFF10UERGnnXZaXH/99RERsWHDhnj33Xdj+fLlsd9++8WSJUti9OjRsXDhwoiIWLhwYQwaNCgOOeSQ+MEPfhD/9V//FRERDQ0NUVNTE+vXr49169bFvvvuG88++2wsX748JMXTTz+9Od4+ffq0+FpSfW5mtl2Ahmjmb6prHIUoYpvh8OHDGTFiBN26dWO//fZjwoQJSGLEiBGsWLGCJ554grPPPhuAI488krfeeou1a9cCMGXKFJYsWcLs2bO5/PLLW3yOxx57jDPPPJOqqip23XVXjjzyyFQxPvLII1x44YUAVFVVMWDAAABWr17N5MmT+c1vfsPo0aMBGD16NK+++irf/e53efvttznwwANZvHgxTzzxBFOmTKFPnz707duXk08+mccffxyAYcOGccghh6R748ysZCr2zvFykd/2361bt83L3bp1Y8OGDXTv/tmPqGmz1NixY3nllVdYs2YNO++8c7PP01JTVvfu3dm0aRNA6pvrBgwYwG677caTTz7Jfvvtt7k8lxhOPvlkunXrxp/+9CeqqqpaPE6fPn1SPa+ZlZZrHGkVq82wBWPHjuW3v/0tAPPmzWPnnXemf//+LFu2jEhqQM8++yyffPIJAwcObPEYM2fOZOPGjaxatYq5c+duXlddXc2CBQsAuPvuu5vdf8KECcyYMQOAjRs38t577wGwww47MHv2bO644w5+97vfAfDkk0/yzjvvAPDJJ5/w8ssvM2zYMMaOHcvs2bP54IMPeP/997n33nv58pe/3Ozz9ejRg08//TTV+2RmHcc1jrQ6+HLcTCbDeeedx8iRI+nduze33347kP0jf8cdd9CjRw8+97nPcdddd7VYq5gyZQqPPPIII0aM4Itf/CLjxo3bvK6uro7zzz+fn/zkJxx88MHN7n/jjTcybdo0brnlFqqqqpgxYwaDBw8GsrWF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
+"
+>
+</div>
+
 </div>
 
 </div>
@@ -13285,16 +13360,8 @@ None
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Discussion of the Results</strong>
-In the excercise the goal was to resize the hash table if a certain threshold is obtained.</p>
-<ol>
-<li>Why did you choose a particular resizing method? How much does your table grow at each resize operation?
-The resizing method I implemented kept track of how many items were put into the table by incrementing the count variable. The size of the table was predetermined to be 11. Once a threshold of 80% is reached the table size is doubled and rounded up to the nearest prime number. The reason for making sure that the hash table size is a prime number is that this method avoids clustering problems described in the lectures. So every time the table is resized it is doubled and rounded to the nearest prime number. </li>
-</ol>
-<p>For example the first time, 11<em>2 = 22 +1 = 23. The second time the table needs to grow, the size becomes 23</em>2 = 46 + 1 = 47. This is also verified in the test cases.</p>
-<ol>
-<li>What loading factor threshold have used for the resizing the table and why that particular choice?
-The loading factor threshold I have used is 80%. The default load factor (.75) offers a good tradeoff between time and space costs. However, I decided to use 80% for this case because there are less items and as a result less space would be wasted. </li>
-</ol>
+In the excercise the goal was to reimplement the quickSort algorithm using the median of three method to decide the pivot value. The additional function defined as median was used to get the median pivot index and from there the regular algorithm did the work.</p>
+<p>An experiment was devised to show that Canonic quickSort is as fast as mo3_quickSort when processing large lists of unsortedintegers. To implement this experiment, the timeit module was imported and random unsorted lists of range 50 were generated and sorted using the respective algorithms. As seen above in the benchmark testing, both times are very close, thus proving the above mentioned statement. However the median of three quicksort method is only slightly better.</p>
 
 </div>
 </div>
