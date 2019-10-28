@@ -1,89 +1,54 @@
-import copy 
-import sympy
+#Implement the median-of-three method (see Section 5.12 of the textbook) 
+# for selecting a pivot value as amodification to quickSort (ame this function mo3_quickSort). 
+# Prepare test cases for your mo3_quickSort
 
-class HashTable:
-    def __init__(self, size = 11):
-        self.size = size
-        self.slots = [None] * self.size
-        self.data = [None] * self.size
-        self.maxLoadFactor = 0.80
-        self.count = 0
+def quickSort(alist):
+    quickSortHelper(alist,0,len(alist)-1)
+
+def quickSortHelper(alist,first,last):
+    if first<last:
+        splitpoint = partition(alist,first,last)
+        quickSortHelper(alist,first,splitpoint-1)
+        quickSortHelper(alist,splitpoint+1,last)
+
+
+def partition(alist,first,last):
+    #find middle index
+    middleindex = median(alist,first,last,(first+last)//2)
+    print(middleindex)
+    #swap first element with the pivot value chosen
+    alist[first],alist[middleindex] = alist[middleindex],alist[first]
     
-    def put(self,key,data):
-        hashvalue = self.hashfunction(key,len(self.slots))            
-            
-        if self.slots[hashvalue] == None:
-            self.slots[hashvalue] = key
-            self.data[hashvalue] = data
-            self.count += 1
-            self.checkGrow()
-            
+    pivotvalue = alist[first]
+
+    leftmark = first+1
+    rightmark = last
+
+    done = False
+    while not done:
+        while leftmark <= rightmark and alist[leftmark] <= pivotvalue:
+            leftmark = leftmark + 1
+
+        while alist[rightmark] >= pivotvalue and rightmark >= leftmark:
+            rightmark = rightmark -1
+
+        if rightmark < leftmark:
+            done = True
         else:
-            if self.slots[hashvalue] == key:
-                self.data[hashvalue] = data  #replace
-            else:
-                nextslot = self.rehash(hashvalue,len(self.slots))
-                while self.slots[nextslot] != None and \
-                          self.slots[nextslot] != key:
-                    nextslot = self.rehash(nextslot,len(self.slots))
+            temp = alist[leftmark]
+            alist[leftmark] = alist[rightmark]
+            alist[rightmark] = temp
 
-                if self.slots[nextslot] == None:
-                    self.slots[nextslot]=key
-                    self.data[nextslot]=data
-                    self.count += 1
-                    self.checkGrow()
-                else:
-                    self.data[nextslot] = data #replace
-       
+    temp = alist[first]
+    alist[first] = alist[rightmark]
+    alist[rightmark] = temp
 
-    def hashfunction(self,key,size):
-         return key%size
+    return rightmark
 
-    def rehash(self,oldhash,size):
-        return (oldhash+1)%size
+# Implement median
+def median(alist, first, last, middle):
+    if alist[first] < alist[last]:
+        return last if alist[last] < alist[middle] else int(middle)
+    else:
+        return first if alist[first] < alist[middle] else int(middle)
 
-    def get(self,key):
-        startslot = self.hashfunction(key,len(self.slots))
-
-        data = None
-        stop = False
-        found = False
-        position = startslot
-        while self.slots[position] != None and  \
-                           not found and not stop:
-            if self.slots[position] == key:
-                found = True
-                data = self.data[position]
-            else:
-                position=self.rehash(position,len(self.slots))
-                if position == startslot:
-                    stop = True
-        return data
-
-    def checkGrow(self):
-        if self.count > self.maxLoadFactor * self.size:
-            self.grow()
-    
-    def grow(self):
-        newSize = 2*self.size 
-        if (newSize%2 == 0):
-            newSize = newSize + 1
-        while(sympy.isprime(newSize) == 'false'):
-            newSize += 2
-        H2 = HashTable(newSize)
-        for key in self.slots:
-            if key != None:
-                H2.put(key, self.get(key))
-      
-        self.size = newSize
-        self.slots = copy.deepcopy(H2.slots)
-        self.data = copy.deepcopy(H2.data)
-        del H2
-    
-    
-
-    def __getitem__(self,key):
-        return self.get(key)
-
-    def __setitem__(self,key,data):
-        self.put(key,data)
