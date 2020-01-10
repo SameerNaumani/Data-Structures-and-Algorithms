@@ -6,7 +6,13 @@ Overall the python function was able to find a perfect match eventually but it t
 
 
 monkeyTypist()
+
 String   Score  Try
+
+
+
 leapiextfwsuxsrdknokxgcpjdgs    10.714286 0
+
 methinks it isolike a weasel    96.428571 100
+
 methinks it is like a weasel    100.000000 145
